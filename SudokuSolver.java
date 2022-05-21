@@ -1,9 +1,11 @@
+
 /*
     My approach: go through all the empty spaces in the grid, and keep trying numbers
     till we have a valid insertion. Then, i'll go on to the next one and repeat the process.
     If we get to a point were no numbers are valid, we go back to the previous inserted number
     and change it to the next possible number. Then go back to the next one.
 */
+import java.util.Scanner;
 
 public class SudokuSolver {
     /* 9x9 grid */
@@ -11,21 +13,41 @@ public class SudokuSolver {
 
     public static void main(String[] args) {
 
-        int[][] board = {
-                { 8, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 3, 6, 0, 0, 0, 0, 0 },
-                { 0, 7, 0, 0, 9, 0, 2, 0, 0 },
-                { 0, 5, 0, 0, 0, 7, 0, 0, 0 },
-                { 0, 0, 0, 0, 4, 5, 7, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0, 3, 0 },
-                { 0, 0, 1, 0, 0, 0, 0, 6, 8 },
-                { 0, 0, 8, 5, 0, 0, 0, 1, 0 },
-                { 0, 9, 0, 0, 0, 0, 4, 0, 0 }
-        };
-        
-        GRID_SIZE = board[0].length;
-        
+        System.out.println("Enter board size: ");
+        Scanner sc = new Scanner(System.in);
+        GRID_SIZE = sc.nextInt();
+
+        System.out.println("Enter sudoku elements (blanks = 0): ");
+
+        int[][] board = new int[GRID_SIZE][GRID_SIZE];
+
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
+                board[i][j] = sc.nextInt();
+            }
+        }
+
+        System.out.println("Your Board: ");
+        printBoard(board);
+
+
+        sc.close();
+        /*
+         * int[][] board = {
+         * { 8, 0, 0, 0, 0, 0, 0, 0, 0 },
+         * { 0, 0, 3, 6, 0, 0, 0, 0, 0 },
+         * { 0, 7, 0, 0, 9, 0, 2, 0, 0 },
+         * { 0, 5, 0, 0, 0, 7, 0, 0, 0 },
+         * { 0, 0, 0, 0, 4, 5, 7, 0, 0 },
+         * { 0, 0, 0, 1, 0, 0, 0, 3, 0 },
+         * { 0, 0, 1, 0, 0, 0, 0, 6, 8 },
+         * { 0, 0, 8, 5, 0, 0, 0, 1, 0 },
+         * { 0, 9, 0, 0, 0, 0, 4, 0, 0 }
+         * };
+         */
+
         if (solve(board)) {
+            System.out.println("\n\n Solved!");
             printBoard(board);
         } else {
             System.out.println("Unsolvable Board");
@@ -35,7 +57,7 @@ public class SudokuSolver {
     // helper to print a pretty board
     private static void printBoard(int[][] board) {
         for (int row = 0; row < GRID_SIZE; row++) {
-                
+
             if (row % 3 == 0) {
                 for (int k = 0; k < GRID_SIZE; k++) {
                     System.out.print("  _ ");
@@ -50,7 +72,7 @@ public class SudokuSolver {
                 System.out.print(" " + board[row][col] + " ");
             }
             System.out.println(" |");
-            
+
         }
         for (int k = 0; k < GRID_SIZE; k++) {
             System.out.print("  _ ");
@@ -95,8 +117,8 @@ public class SudokuSolver {
 
     // helper method to detect is all three condition are valid
     private static boolean isNumberValid(int[][] board, int number, int row, int col) {
-        return !isNumberInRow(board, number, row) && !isNumberInColumn(board, number, col) 
-            && ! isNumberInBox(board, number, row, col);
+        return !isNumberInRow(board, number, row) && !isNumberInColumn(board, number, col)
+                && !isNumberInBox(board, number, row, col);
     }
 
     private static boolean solve(int[][] board) {
@@ -113,11 +135,11 @@ public class SudokuSolver {
                             if (solve(board)) {
                                 return true;
                             } else {
-                                // set that place back to zero if there is no way 
+                                // set that place back to zero if there is no way
                                 // of completing the board with the previous number there
                                 board[row][col] = 0;
                             }
-                            
+
                         }
                     }
                     return false;
