@@ -7,7 +7,7 @@
 
 public class SudokuSolver {
     /* 9x9 grid */
-    private static final int GRID_SIZE = 9;
+    private static int GRID_SIZE;
 
     public static void main(String[] args) {
 
@@ -22,7 +22,8 @@ public class SudokuSolver {
                 { 0, 0, 8, 5, 0, 0, 0, 1, 0 },
                 { 0, 9, 0, 0, 0, 0, 4, 0, 0 }
         };
-
+        
+        GRID_SIZE = board[0].length;
         
         if (solve(board)) {
             printBoard(board);
