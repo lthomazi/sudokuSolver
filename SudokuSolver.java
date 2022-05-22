@@ -7,7 +7,7 @@ public class SudokuSolver {
 
     public static void main(String[] args) {
 
-        System.out.println("Enter board size: ");
+        System.out.print("Enter board size: ");
         Scanner sc = new Scanner(System.in);
         GRID_SIZE = sc.nextInt();
 
@@ -40,8 +40,14 @@ public class SudokuSolver {
          * };
          */
 
+        // time
+        long start = System.currentTimeMillis();
+        long end;
+        long elapsed;
         if (solve(board)) {
-            System.out.println("\n\n Solved!");
+            end = System.currentTimeMillis();
+            elapsed = end - start;
+            System.out.println("\n\n Solved in " + elapsed + " milliseconds!");
             printBoard(board);
         } else {
             System.out.println("Unsolvable Board");
